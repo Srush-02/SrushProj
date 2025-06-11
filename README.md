@@ -13,5 +13,14 @@ https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBn
 https://www.w3schools.com/js/
 https://www.geeksforgeeks.org/javascript/javascript-tutorial/
 
+Frontend & Backend: JavaScript (Node.js and framework like React.js)
+Database: Postgress or MongoDB (flexibility in handling various data mongo DB)
+APIs: RESTful APIs to handle CRUD operations
+For admin panel :Create, Read, Update, Delete (CRUD) operations for patient records, Upload diagnostic data like MRI & blood test results
+For database ll be creating 3 table patient details, Medical Record, Test Result.
+Patient API:
+To get all patient records, Get details of a specific patient, Post call- Add a new patient , Delete call Delete a patient record.
+Test Resukt API: 
+Get all tests for a patient, Post call Add a new test record, PUT call Update a test result, Delete call -admin can delete test record.
 
 
