@@ -8,4 +8,10 @@ Company Background :
 Implemention : 
     Healthcare data including MRI, blood test and and patient encounter information.
 
+Clearning concept of Js :
+https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
+https://www.w3schools.com/js/
+https://www.geeksforgeeks.org/javascript/javascript-tutorial/
+
+
 
