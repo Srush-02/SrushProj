@@ -66,3 +66,6 @@ ReferenceError: module is not defined in ES module scope
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
 
 Node.js v22.16.0
+
+how to define defines the number of columns a table cell should span. and styling ideas(used colspan information from w3school).
+
