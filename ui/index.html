@@ -2,19 +2,84 @@
 <head>
   <meta charset="UTF-8" />
   <title>Simple Search</title>
+  <style>
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      margin-right: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      margin-right: 20px;
+    }
+    
+    button {
+      margin-right: 5px;
+    }
+  </style>
 </head>
 <body>
-<h2> Search Form</h2>
-  <label for="input1">Patient:</label>
-  <input type="text" id="input1" name="input1" /><br/><br/>
+ <h1>Patient Records</h1>
 
-  <label for="input2">Input 2:</label>
-  <input type="text" id="input2" name="input2" /><br/><br/>
+  <form id="filterForm">
+    <label>
+      Patient Name:
+      <input type="text" id="patientName" />
+    </label>
 
-  <label for="input3">Input 3:</label>
-  <input type="text" id="input3" name="input3" /><br/><br/>
+    <label>
+      From:
+      <input type="date" id="dateFrom" />
+    </label>
 
-  <button id="searchBtn">Search</button>
+    <label>
+      To:
+      <input type="date" id="dateTo" />
+    </label>
+
+    <label>
+      <input type="checkbox" id="statusComplete" />
+      Test Complete
+    </label>
+
+    <label>
+      <input type="checkbox" id="statusPending" />
+      Test Pending
+    </label>
+
+    <label>
+      Mobile:
+      <input type="text" id="mobileNumber" />
+    </label>
+
+    <label>
+      Email:
+      <input type="email" id="email" />
+    </label>
+
+    <button type="submit">Filter</button>
+  </form>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="6">Loading...</td>
+      </tr>
+    </tbody>
+  </table>
 
   <script src="script.js"></script>
 
