@@ -55,3 +55,35 @@ function applyFilters() {
 
   renderTable(filtered);
 }
+
+window.editPatient = function(id) {
+  const patient = allData.find(p => p.id === id);
+  if (!patient) return;
+
+  const newName = prompt('Enter new name:', patient.name);
+
+
+  const updatedPatient = {
+    ...patient,
+    name: newName,
+
+  };
+
+  fetch(`${API_BASE_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updatedPatient)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Update failed');
+    return response.json();
+  })
+  .then(() => {
+    const index = allData.findIndex(p => p.id === id);
+    allData[index] = updatedPatient;
+    applyFilters();
+  })
+  .catch(err => alert('Error updating patient: ' + err.message));
+};
