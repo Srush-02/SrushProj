@@ -1,5 +1,5 @@
 
-To connect Database server I faced this types of error which I have solved by chatgpt and stack overflow
+1. To connect Database server I faced this types of error which I have solved by chatgpt and stack overflow
 npm init -y
 npm install mssql
 
@@ -43,6 +43,62 @@ ReferenceError: module is not defined in ES module scope
 
 Node.js v22.16.0
 
-how to define defines the number of columns a table cell should span. and styling ideas(used colspan information from w3school).
+2. how to define defines the number of columns a table cell should span. and styling ideas(used colspan information from w3school).
 
 ChatGPT History share link: 
+
+
+3.how to write query in js ?
+Response: 
+const sql = require('mssql');
+
+const config = {
+  user: 'your_username',
+  password: 'your_password',
+  server: 'localhost',
+  database: 'your_database',
+  options: {
+    encrypt: true,
+    trustServerCertificate: true,
+  }
+};
+
+async function updatePatient() {
+  try {
+    const pool = await sql.connect(config);
+    const result = await pool.request()
+      .input('phone_number', sql.VarChar(20), '1234567890')
+      .input('first_name', sql.VarChar(100), 'John')
+      .input('last_name', sql.VarChar(100), 'Doe')
+      .input('gender', sql.VarChar(10), 'Male')
+      .input('date_of_birth', sql.Date, '1990-01-01')
+      .query(`
+        UPDATE Patient
+        SET first_name = @first_name,
+            last_name = @last_name,
+            gender = @gender,
+            date_of_birth = @date_of_birth
+        WHERE phone_number = @phone_number
+      `);
+
+    console.log('Rows affected:', result.rowsAffected);
+  } catch (err) {
+    console.error('SQL Error:', err);
+  }
+}
+3. issue:  No 'Access-Control-Allow-Origin
+index.html:1  Access to fetch at 'http://localhost:3000/patient' from origin 'http://127.0.0.1:5500' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+script.js:125  Fetch failed: TypeError: Failed to fetch
+    at script.js:118:3
+solution :
+You're getting two related errors, indicating the request to your backend is failing due to CORS and/or fetch handling issues
+npm install cors
+
+const cors = require('cors');
+const express = require('express');
+const app = express();
+
+app.use(cors()); // This enables CORS for all origins
+
+4. W3 school window.addEventListener 
+window.addEventListener -> DOMContentLoaded is a special browser event that fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.

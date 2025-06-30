@@ -1,3 +1,4 @@
+const API_BASE_URL = 'http://localhost:3000/patient'; 
 
 let allData = [];
 
@@ -8,29 +9,33 @@ function renderTable(dataToRender) {
   tableBody.innerHTML = '';
 
   if (dataToRender.length === 0) {
+    console.log("data-----------"+dataToRender)
     tableBody.innerHTML = '<tr><td colspan="6">No records found</td></tr>';
     return;
   }
 
-  dataToRender.forEach(item => {
+  dataToRender.forEach(patient => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.date}</td>
-      <td>${item.status}</td>
-      <td>${item.mobile}</td>
-      <td>${item.email}</td>
+      <td>${patient.first_name}</td>
+     <td>${patient.date_of_birth || ''}</td>
+      <td>${patient.gender || ''}</td>
+      <td>${patient.phone_number}</td>
+      <td>${patient.patient_email }</td>
       <td>
-        <button onclick="editPatient(${item.id})">Edit</button>
-        <button onclick="deletePatient(${item.id})">Delete</button>
+        <button onclick="editPatient(${patient.phone_number})">Edit</button>
+        <button onclick="deletePatient(${patient.phone_number})">Delete</button>
       </td>
     `;
-    tableBody.appendChild(row);
+    tableBody.appendChild(row);//?
   });
 }
 
 function applyFilters() {
-  const name = document.getElementById('patientName').value.toLowerCase();
+  console.log("check applyfilter");
+  const name = document.getElementById('first_name').value.toLowerCase();
+    console.log("check applyfilter2");
+
   const dateFrom = document.getElementById('dateFrom').value;
   const dateTo = document.getElementById('dateTo').value;
   const statusComplete = document.getElementById('statusComplete').checked;
@@ -39,16 +44,21 @@ function applyFilters() {
   const email = document.getElementById('email').value.toLowerCase();
 
   const filtered = allData.filter(item => {
-    const itemDate = new Date(item.date);
+        console.log("all data-----------"+item.phone_number)
 
-    const matchName = !name || item.name.toLowerCase().includes(name);
-    const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
+   const itemDate = new Date(item.date);
+   // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
+        console.log("itemDate data-----------"+item.date)
+
+    const matchName = !name ||(item.first_name && item.first_name.toLowerCase().includes(name));
+
+   const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
     const matchDateTo = !dateTo || itemDate <= new Date(dateTo);
     const matchStatus = (!statusComplete && !statusPending) ||
       (statusComplete && item.status === 'Complete') ||
       (statusPending && item.status === 'Pending');
-    const matchMobile = !mobile || item.mobile.includes(mobile);
-    const matchEmail = !email || item.email.toLowerCase().includes(email);
+    const matchMobile = !mobile || item.phone_number.includes(mobile);
+    const matchEmail = !email || item.patient_email.toLowerCase().includes(email);
 
     return matchName && matchDateFrom && matchDateTo && matchStatus && matchMobile && matchEmail;
   });
@@ -56,20 +66,41 @@ function applyFilters() {
   renderTable(filtered);
 }
 
-window.editPatient = function(id) {
-  const patient = allData.find(p => p.id === id);
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  applyFilters();
+});
+
+window.editPatient = function(phone_number) {
+  const patient = allData.find(p => p.phone_number === phone_number);
   if (!patient) return;
 
-  const newName = prompt('Enter new name:', patient.name);
+  const newFirstName = prompt('Enter first name:', patient.first_name);
+const newLastName = prompt('Enter last name:', patient.last_name);
+const newGender = prompt('Enter gender:', patient.gender);
+const newDob = prompt('Enter date of birth (YYYY-MM-DD):', patient.date_of_birth);
+const newEmail = prompt('Enter email:', patient.patient_email);
 
+  // const newName = prompt('Enter new name:', patient.name);
+  // const newDate = prompt('Enter new date (YYYY-MM-DD):', patient.date);
+  // const newStatus = prompt('Enter status (Complete/Pending):', patient.status);
+  // const newMobile = prompt('Enter mobile:', patient.mobile);
 
   const updatedPatient = {
     ...patient,
-    name: newName,
-
+  first_name: newFirstName,
+  last_name: newLastName,
+  gender: newGender,
+  date_of_birth: newDob,
+    
+    // name: newName,
+    // date: newDate,
+    // status: newStatus,
+    // mobile: newMobile,
+    // email: newEmail
   };
 
-  fetch(`${API_BASE_URL}/${id}`, {
+  fetch(`${API_BASE_URL}/${phone_number}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -81,9 +112,24 @@ window.editPatient = function(id) {
     return response.json();
   })
   .then(() => {
-    const index = allData.findIndex(p => p.id === id);
+    const index = allData.findIndex(p => p.phone_number === phone_number);
     allData[index] = updatedPatient;
     applyFilters();
   })
   .catch(err => alert('Error updating patient: ' + err.message));
 };
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  fetch(API_BASE_URL)
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
+      renderTable(allData);
+    })
+    .catch(err => {
+      console.error('Fetch failed:', err);
+      tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
+    });
+});
