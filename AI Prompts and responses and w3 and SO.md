@@ -93,12 +93,21 @@ script.js:125  Fetch failed: TypeError: Failed to fetch
 solution :
 You're getting two related errors, indicating the request to your backend is failing due to CORS and/or fetch handling issues
 npm install cors
-
-const cors = require('cors');
-const express = require('express');
+const cors = require('cors'); //code change
 const app = express();
 
 app.use(cors()); // This enables CORS for all origins
 
 4. W3 school window.addEventListener 
 window.addEventListener -> DOMContentLoaded is a special browser event that fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+
+
+5. Difference between append() vs appendChild() (https://dev.to/ibn_abubakre/append-vs-appendchild-a4m)
+const parent = document.createElement('div');
+const child = document.createElement('p');
+// Appending Node Objects
+parent.append(child) // Works fine
+parent.appendChild(child) // Works fine
+// Appending DOMStrings
+parent.append('Hello world') // Works fine
+parent.appendChild('Hello world') // Throws error

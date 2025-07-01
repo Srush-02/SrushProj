@@ -27,7 +27,7 @@ function renderTable(dataToRender) {
         <button onclick="deletePatient(${patient.phone_number})">Delete</button>
       </td>
     `;
-    tableBody.appendChild(row);//?
+    tableBody.appendChild(row);
   });
 }
 
@@ -44,11 +44,9 @@ function applyFilters() {
   const email = document.getElementById('email').value.toLowerCase();
 
   const filtered = allData.filter(item => {
-        console.log("all data-----------"+item.phone_number)
 
    const itemDate = new Date(item.date);
    // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
-        console.log("itemDate data-----------"+item.date)
 
     const matchName = !name ||(item.first_name && item.first_name.toLowerCase().includes(name));
 
