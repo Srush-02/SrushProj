@@ -69,8 +69,73 @@ form.addEventListener('submit', function (e) {
   applyFilters();
 });
 
+// window.editPatient = function(phone_number) {
+//   const patient = allData.find(p => p.phone_number === phone_number);
+//   console.log("check edit--", patient)
+//   if (!patient) return;
+
+//   const newFirstName = prompt('Enter first name:', patient.first_name);
+// const newLastName = prompt('Enter last name:', patient.last_name);
+// const newGender = prompt('Enter gender:', patient.gender);
+// const newDob = prompt('Enter date of birth (YYYY-MM-DD):', patient.date_of_birth);
+// const newEmail = prompt('Enter email:', patient.patient_email);
+
+//   // const newName = prompt('Enter new name:', patient.name);
+//   // const newDate = prompt('Enter new date (YYYY-MM-DD):', patient.date);
+//   // const newStatus = prompt('Enter status (Complete/Pending):', patient.status);
+//   // const newMobile = prompt('Enter mobile:', patient.mobile);
+
+//   const updatedPatient = {
+//     ...patient,
+//   first_name: newFirstName,
+//   last_name: newLastName,
+//   gender: newGender,
+//   date_of_birth: newDob,
+    
+//     // name: newName,
+//     // date: newDate,
+//     // status: newStatus,
+//     // mobile: newMobile,
+//     // email: newEmail
+//   };
+
+//   fetch(`${API_BASE_URL}/updatePatient`, {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(updatedPatient)
+//   })
+//   .then(response => {
+//     if (!response.ok) throw new Error('Update failed');
+//     return response.json();
+//   })
+//   .then(() => {
+//     const index = allData.findIndex(p => p.phone_number === phone_number);
+//     allData[index] = updatedPatient;
+//     applyFilters();
+//   })
+//   .catch(err => alert('Error updating patient: ' + err.message));
+// };
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  fetch(API_BASE_URL)
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
+      renderTable(allData);
+    })
+    .catch(err => {
+      console.error('Fetch failed:', err);
+      tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
+    });
+});
+
 window.editPatient = function(phone_number) {
   const patient = allData.find(p => p.phone_number === phone_number);
+  console.log("check edit--", patient)
   if (!patient) return;
 
   const newFirstName = prompt('Enter first name:', patient.first_name);
@@ -98,7 +163,7 @@ const newEmail = prompt('Enter email:', patient.patient_email);
     // email: newEmail
   };
 
-  fetch(`${API_BASE_URL}/${phone_number}`, {
+  fetch(`${API_BASE_URL}/updatePatient`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -118,16 +183,16 @@ const newEmail = prompt('Enter email:', patient.patient_email);
 };
 
 
+window.deletePatient = function(id) {
+  if (!confirm('Are you sure you want to delete this patient?')) return;
 
-window.addEventListener('DOMContentLoaded', () => {
-  fetch(API_BASE_URL)
-    .then(res => res.json())
-    .then(data => {
-      allData = data;
-      renderTable(allData);
-    })
-    .catch(err => {
-      console.error('Fetch failed:', err);
-      tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
-    });
-});
+  fetch(`${API_BASE_URL}/${id}`, {
+    method: 'DELETE'
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Delete failed');
+    allData = allData.filter(p => p.id !== id);
+    applyFilters();
+  })
+  .catch(err => alert('Error deleting patient: ' + err.message));
+};

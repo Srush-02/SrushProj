@@ -8,7 +8,7 @@ const sql = require('mssql');
 const { config } = require('./db/db');
 
 const app = express();
-app.use(cors())//// This enables CORS for all origins
+app.use(cors())
 const port = 3000;
 
 app.use(express.json());
@@ -27,7 +27,7 @@ app.get('/patient', async(req, res) => {
     }
 });
 
-app.put('${API_BASE_URL}/${phone_number}', async (req, res) => {
+app.put('/updatePatient', async (req, res) => {
   const { phone_number } = req.params;
   const { first_name, last_name, gender, date_of_birth , patient_email} = req.body;
 
@@ -60,6 +60,8 @@ app.put('${API_BASE_URL}/${phone_number}', async (req, res) => {
     res.status(500).json({ error: 'Update failed' });
   }
 });
+
+//app.delete
 
 
 app.listen(port, () => {
