@@ -6,6 +6,8 @@ const tableBody = document.getElementById('dataTable').querySelector('tbody');
 const form = document.getElementById('filterForm');
 
 function renderTable(dataToRender) {
+    
+
   tableBody.innerHTML = '';
 
   if (dataToRender.length === 0) {
@@ -29,6 +31,7 @@ function renderTable(dataToRender) {
     `;
     tableBody.appendChild(row);
   });
+
 }
 
 function applyFilters() {
