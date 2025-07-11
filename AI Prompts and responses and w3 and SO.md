@@ -117,3 +117,21 @@ Msg 2628, Level 16, State 1, Line 5
 String or binary data would be truncated in table 'HealthCare.dbo.Patient', column 'test_name'. Truncated value: 'B'.
 The statement has been terminated.
 solution: ALTER TABLE Patient ALTER COLUMN test_name VARCHAR(100);
+
+To reolved issue :
+ALTER TABLE … DROP COLUMN fails when anything (default constraints, computed columns, indexes, foreign‑keys, etc.) still depends on the column.
+ALTER TABLE dbo.TestRecord
+DROP CONSTRAINT DF__TestRecor__creat__398D8EEE;
+
+ALTER TABLE TestRecord
+DROP COLUMN created_at, LastUpdatedTimeStamp;
+
+#  SQL Identity -(geeksforgeeks.com)
+Identity column of a table is a column whose value increases automatically. The value in an identity column is created by the server. A user generally cannot insert a value into an identity column. Identity column can be used to uniquely identify the rows in the table.
+CREATE TABLE TestRecord (
+    test_id INT IDENTITY(1,1) PRIMARY KEY,
+    phone_number VARCHAR(20), 
+    test_name VARCHAR(100),
+    test_status VARCHAR(255),
+    appointment_date DATE
+);

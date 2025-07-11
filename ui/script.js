@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000/patient'; 
+const API_BASE_URL = 'http://localhost:3000';
 
 let allData = [];
 
@@ -9,24 +9,27 @@ function renderTable(dataToRender) {
   tableBody.innerHTML = '';
 
   if (dataToRender.length === 0) {
-    console.log("data-----------"+dataToRender)
+    console.log("data-----------" + dataToRender)
     tableBody.innerHTML = '<tr><td colspan="6">No records found</td></tr>';
     return;
   }
-
+ console.log("data--dataToRender---------" + dataToRender)
   dataToRender.forEach(patient => {
+    console.log("check phone number---->", patient.phone_number)
     const row = document.createElement('tr');
     row.innerHTML = `
+      <td>${patient.test_id || ''}</td>
       <td>${patient.first_name}</td>
-     <td>${patient.date_of_birth || ''}</td>
+      <td>${patient.date_of_birth || ''}</td>
       <td>${patient.gender || ''}</td>
       <td>${patient.phone_number}</td>
-      <td>${patient.patient_email }</td>
+      <td>${patient.patient_email}</td>
       <td>${patient.test_name || ''}</td>
       <td>${patient.appointment_date || ''}</td>
+      <td>${patient.test_status || ''}</td>
       <td>
-        <button onclick="editPatient(${patient.phone_number})">Edit</button>
-        <button onclick="deletePatient(${patient.phone_number})">Delete</button>
+        <button onclick="editPatient('${patient.phone_number}')">Edit</button>
+        <button onclick="deletePatient('${patient.phone_number}')">Delete</button>
       </td>
     `;
     tableBody.appendChild(row);
@@ -36,27 +39,34 @@ function renderTable(dataToRender) {
 function applyFilters() {
   console.log("check applyfilter");
   const name = document.getElementById('first_name').value.toLowerCase();
-    console.log("check applyfilter2");
+  console.log("check applyfilter2");
 
   const dateFrom = document.getElementById('dateFrom').value;
   const dateTo = document.getElementById('dateTo').value;
-  const statusComplete = document.getElementById('statusComplete').checked;
-  const statusPending = document.getElementById('statusPending').checked;
+  const selectedStatus = document.querySelector('input[name="status"]:checked');
+  const statusValue = selectedStatus ? selectedStatus.value : null;
+
+  // const statusComplete = document.getElementById('statusComplete').checked;
+  // const statusPending = document.getElementById('statusPending').checked;
   const mobile = document.getElementById('mobileNumber').value;
   const email = document.getElementById('email').value.toLowerCase();
 
   const filtered = allData.filter(item => {
 
-   const itemDate = new Date(item.date);
-   // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
+    const itemDate = new Date(item.date);
+    // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
+    console.log("check itemDate-", itemDate);
+    console.log("abc -", item);
 
-    const matchName = !name ||(item.first_name && item.first_name.toLowerCase().includes(name));
 
-   const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
+    const matchName = !name || (item.first_name && item.first_name.toLowerCase().includes(name));
+
+    const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
     const matchDateTo = !dateTo || itemDate <= new Date(dateTo);
-    const matchStatus = (!statusComplete && !statusPending) ||
-      (statusComplete && item.status === 'Complete') ||
-      (statusPending && item.status === 'Pending');
+    // const matchStatus = (!statusComplete && !statusPending) ||
+    //   (statusComplete && item.status === 'Complete') ||
+    //   (statusPending && item.status === 'Pending');
+    const matchStatus = !statusValue || item.status === statusValue;
     const matchMobile = !mobile || item.phone_number.includes(mobile);
     const matchEmail = !email || item.patient_email.toLowerCase().includes(email);
 
@@ -73,16 +83,20 @@ form.addEventListener('submit', function (e) {
 
 
 
-window.editPatient = function(phone_number) {
-  const patient = allData.find(p => p.phone_number === phone_number);
-  console.log("check edit--", patient)
+window.editPatient = function (phone_number) {
+  const patient = allData.find(p =>{
+    console.log("HINT--p----",p.phone_number , phone_number)
+    console.log("HINT------", p.phone_number === phone_number, p.phoneNumber, phone_number)
+    return p.phone_number === phone_number
+  });
+  console.log("check edit--", patient, "allData---" , allData)
   if (!patient) return;
 
-const newFirstName = prompt('Enter first name:', patient.first_name);
-const newLastName = prompt('Enter last name:', patient.last_name);
-const newGender = prompt('Enter gender:', patient.gender);
-const newDob = prompt('Enter date of birth (YYYY-MM-DD):', patient.date_of_birth);
-const newEmail = prompt('Enter email:', patient.patient_email);
+  const newFirstName = prompt('Enter first name:', patient.first_name);
+  const newLastName = prompt('Enter last name:', patient.last_name);
+  const newGender = prompt('Enter gender:', patient.gender);
+  const newDob = prompt('Enter date of birth (YYYY-MM-DD):', patient.date_of_birth);
+  const newEmail = prompt('Enter email:', patient.patient_email);
 
   // const newName = prompt('Enter new name:', patient.name);
   // const newDate = prompt('Enter new date (YYYY-MM-DD):', patient.date);
@@ -91,11 +105,11 @@ const newEmail = prompt('Enter email:', patient.patient_email);
 
   const updatedPatient = {
     ...patient,
-  first_name: newFirstName,
-  last_name: newLastName,
-  gender: newGender,
-  date_of_birth: newDob,
-    
+    first_name: newFirstName,
+    last_name: newLastName,
+    gender: newGender,
+    date_of_birth: newDob,
+
     // name: newName,
     // date: newDate,
     // status: newStatus,
@@ -110,31 +124,31 @@ const newEmail = prompt('Enter email:', patient.patient_email);
     },
     body: JSON.stringify(updatedPatient)
   })
-  .then(response => {
-    if (!response.ok) throw new Error('Update failed');
-    return response.json();
-  })
-  .then(() => {
-    const index = allData.findIndex(p => p.phone_number === phone_number);
-    allData[index] = updatedPatient;
-    applyFilters();
-  })
-  .catch(err => alert('Error updating patient: ' + err.message));
+    .then(response => {
+      if (!response.ok) throw new Error('Update failed');
+      return response.json();
+    })
+    .then(() => {
+      const index = allData.findIndex(p => p.phone_number === phone_number);
+      allData[index] = updatedPatient;
+      applyFilters();
+    })
+    .catch(err => alert('Error updating patient: ' + err.message));
 };
 
 
-window.deletePatient = function(id) {
+window.deletePatient = function (id) {
   if (!confirm('Are you sure you want to delete this patient?')) return;
 
   fetch(`${API_BASE_URL}/${id}`, {
     method: 'DELETE'
   })
-  .then(response => {
-    if (!response.ok) throw new Error('Delete failed');
-    allData = allData.filter(p => p.id !== id);
-    applyFilters();
-  })
-  .catch(err => alert('Error deleting patient: ' + err.message));
+    .then(response => {
+      if (!response.ok) throw new Error('Delete failed');
+      allData = allData.filter(p => p.id !== id);
+      applyFilters();
+    })
+    .catch(err => alert('Error deleting patient: ' + err.message));
 };
 
 const addPatientBtn = document.getElementById('addPatientBtn');
@@ -154,76 +168,96 @@ cancelBtn.addEventListener('click', () => {
 });
 
 addPatientForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    console.log("submit addPatientForm");
+  e.preventDefault();
+  console.log("submit addPatientForm");
 
-    const firstName = document.getElementById('newFirstName').value.trim();
-    const lastName = document.getElementById('newLastName').value.trim();
-    const gender = document.getElementById('newGender').value.trim();
-    const dob = document.getElementById('newDob').value;
-    const phoneNumber = document.getElementById('newPhoneNumber').value.trim();
-    const email = document.getElementById('newEmail').value.trim();
-    const testName = document.getElementById('newTestName').value.trim();
-    const appointmentDate = document.getElementById('newAppointmentDate').value;
-    const status = document.getElementById('newStatus').value;
+  const firstName = document.getElementById('newFirstName').value.trim();
+  const lastName = document.getElementById('newLastName').value.trim();
+  const gender = document.getElementById('newGender').value.trim();
+  const dob = document.getElementById('newDob').value;
+  const phoneNumber = document.getElementById('newPhoneNumber').value.trim();
+  const email = document.getElementById('newEmail').value.trim();
+  const testName = document.getElementById('newTestName').value.trim();
+  const appointmentDate = document.getElementById('newAppointmentDate').value;
+  const status = document.getElementById('newStatus').value;
 
-    document.querySelectorAll('.form-group input').forEach(input => {
-      input.style.borderColor = '';
-    });
+  document.querySelectorAll('.form-group input').forEach(input => {
+    input.style.borderColor = '';
+  });
 
-    let hasError = false;
+  let hasError = false;
 
-    if(!firstName || !lastName || !gender || !dob || !phoneNumber || !email || !testName || !appointmentDate || !status){
-      hasError = true
-    }
+  if (!firstName || !lastName || !gender || !dob || !phoneNumber || !email || !testName || !appointmentDate || !status) {
+    hasError = true
+  }
 
-    if (hasError) {
-      alert('Please fill in all required fields');
-      return;
-    }
+  if (hasError) {
+    alert('Please fill in all required fields');
+    return;
+  }
 
-    const payload = {
-      firstName,
-      lastName,
-      gender,
-      dob,
-      phoneNumber,
-      email,
-      testName,
-      appointmentDate,
-      status,
-    };
+  const payload = {
+    first_name: firstName,
+    last_name: lastName,
+    gender,
+    date_of_birth: dob,
+    phone_number: phoneNumber,
+    patient_email: email,
+    test_name: testName,
+    appointment_date: appointmentDate,
+    test_status: status
+  };
 
-    console.log('Submitting data:', payload);
+  // const payload = {
+  //   firstName,
+  //   lastName,
+  //   gender,
+  //   dob,
+  //   phoneNumber,
+  //   email,
+  //   testName,
+  //   appointmentDate,
+  //   status,
+  // };
 
-    // Example API request
-    fetch('https://your-api-url.com/add-patient', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+  console.log('Submitting data:', payload);
+
+  // Example API request
+  fetch(`${API_BASE_URL}/add-patient`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(error => {
+          throw new Error(error.error || 'Bad Request- check Server ');
+        });
+      }
+      return res.json(); 
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log('API Success:', data);
-        alert('Patient added successfully!');
-        addPatientForm.reset();
-      })
-      .catch(err => {
-        console.error('API Error:', err);
-        alert('Failed to add patient.');
-      });
-  });
+    .then(data => {
+      console.log('API Success:', data);
+      alert('Patient added successfully!');
+      addPatientForm.reset();
+    })
+    .catch(err => {
+      console.error('API Error:', err);
+      alert('Failed to add patient.');
+    });
+});
 
-  window.addEventListener('DOMContentLoaded', () => {
-    fetch(API_BASE_URL)
-      .then(res => res.json())
-      .then(data => {
-        allData = data;
-        renderTable(allData);
-      })
-      .catch(err => {
-        console.error('Fetch failed:', err);
-        tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
-      });
-  });
+window.addEventListener('DOMContentLoaded', () => {
+  fetch(`${API_BASE_URL}/patient`)
+    .then(res => res.json())
+    .then(data => {
+      allData = data;
+      console.log("DOMContentLoaded---->", allData)
+      renderTable(allData);
+    })
+    .catch(err => {
+      console.error('Fetch failed:', err);
+      tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
+    });
+});
 

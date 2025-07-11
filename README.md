@@ -23,9 +23,37 @@ To get all patient records, Get details of a specific patient, Post call- Add a 
 Test Resukt API: 
 Get all tests for a patient, Post call Add a new test record, PUT call Update a test result, Delete call -admin can delete test record.
 
-steps for excution: 
+# steps for excution: 
 Connect database
 Start server.js using node server.js command
+
+
+
+
+# used SQL query:
+select * from Patient
+alter table Patient add test_name varchar
+ALTER TABLE Patient ALTER COLUMN test_name VARCHAR(100);
+/*test_result test_name and last 2 */
+Update patient set test_name = 'Blood Test'
+WHERE  phone_number = '9251478200';
+
+ALTER TABLE Patient
+DROP COLUMN test_name;
+
+select * from TestRecord
+
+ALTER TABLE TestRecord ALTER COLUMN test_name VARCHAR(100);
+ALTER TABLE TestRecord ALTER COLUMN test_name VARCHAR(100);
+
+ALTER TABLE TestRecord
+DROP COLUMN created_at, LastUpdatedTimeStamp;
+
+To reolved issue :
+ALTER TABLE … DROP COLUMN fails when anything (default constraints, computed columns, indexes, foreign‑keys, etc.) still depends on the column.
+ALTER TABLE dbo.TestRecord
+DROP CONSTRAINT DF__TestRecor__creat__398D8EEE;
+
 
 TODO:
 Need to check footer,
