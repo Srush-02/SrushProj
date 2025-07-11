@@ -111,3 +111,9 @@ parent.appendChild(child) // Works fine
 // Appending DOMStrings
 parent.append('Hello world') // Works fine
 parent.appendChild('Hello world') // Throws error
+
+6. alter table Patient add test_name varchar(Forget to add varchar size)
+Msg 2628, Level 16, State 1, Line 5
+String or binary data would be truncated in table 'HealthCare.dbo.Patient', column 'test_name'. Truncated value: 'B'.
+The statement has been terminated.
+solution: ALTER TABLE Patient ALTER COLUMN test_name VARCHAR(100);

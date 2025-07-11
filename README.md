@@ -22,3 +22,10 @@ Patient API:
 To get all patient records, Get details of a specific patient, Post call- Add a new patient , Delete call Delete a patient record.
 Test Resukt API: 
 Get all tests for a patient, Post call Add a new test record, PUT call Update a test result, Delete call -admin can delete test record.
+
+steps for excution: 
+Connect database
+Start server.js using node server.js command
+
+TODO:
+Need to check footer,
