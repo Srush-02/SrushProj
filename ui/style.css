@@ -235,3 +235,19 @@ body {
     align-items: center;
   }
   
+
+  .table-wrapper {
+  overflow-x: auto;          
+  width: 100%;           
+}
+
+.table-wrapper table {
+  border-collapse: collapse;
+  white-space: nowrap;
+  min-width: 100%;           
+}
+
+.table-wrapper thead th {
+  position: sticky;
+  top: 0;
+}
