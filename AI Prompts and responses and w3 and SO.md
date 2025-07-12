@@ -138,3 +138,8 @@ CREATE TABLE TestRecord (
 
 # What’s a connection pool?
 Opening a new TCP connection to SQL Server, await: waits to complete  Promise, so this is pausing that process 
+
+# Clearning concept of Js :
+https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
+https://www.w3schools.com/js/
+https://www.geeksforgeeks.org/javascript/javascript-tutorial/

@@ -6,22 +6,15 @@ Company Location : https://g.co/kgs/VwsfmQk
 Company Background : 
     Medicon India is a healthcare service centre located in Mira-Bhayandar(Mumbai). Medicon India is a company that is committed to make healthcare affordable. It is committed to making healthcare accessible to all. They achieve this by partnering with over 100 medical facilities, such as diagnostic centers, hospitals, and laboratories. 
 Implemention : 
-    Healthcare data including MRI, blood test and and patient encounter information.
-
-Clearning concept of Js :
-https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
-https://www.w3schools.com/js/
-https://www.geeksforgeeks.org/javascript/javascript-tutorial/
+    Healthcare patient test data including MRI, blood test and and patient encounter information at admin level.
 
 Frontend & Backend: JavaScript (Node.js and framework like React.js)
-Database: Postgress or MongoDB (flexibility in handling various data mongo DB)
+Database: SSMS
 APIs: RESTful APIs to handle CRUD operations
 For admin panel :Create, Read, Update, Delete (CRUD) operations for patient records, Upload diagnostic data like MRI & blood test results
-For database ll be creating 2 table patient details, Test Result.
+For database ll be creating 2 table patient details, Test Record.
 Patient API:
-To get all patient records, Post call- Add a new patient , Delete call Delete a patient record.
-Test Resukt API: 
-Get all tests for a patient, Post call Add a new test record, PUT call Update a test result, Delete call -admin can delete test record.
+To get all patient records, Post call- Add a new patient , Delete - Delete a patient record.
 
 # steps for excution: 
 Open SSMS for backend connection and using VS code open server.js file 
@@ -35,7 +28,7 @@ Try "Go live" to connect html file.
 
 
 
-# used SQL query:
+# SQL query:
 
  CREATE TABLE TestRecord (
     test_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -71,7 +64,29 @@ ALTER TABLE TestRecord ALTER COLUMN test_name VARCHAR(100);
 ALTER TABLE TestRecord
 DROP COLUMN created_at, LastUpdatedTimeStamp;
 
-To reolved issue :
-ALTER TABLE … DROP COLUMN fails when anything (default constraints, computed columns, indexes, foreign‑keys, etc.) still depends on the column.
-ALTER TABLE dbo.TestRecord
-DROP CONSTRAINT DF__TestRecor__creat__398D8EEE;
+# Back-end Technology :
+- Java script
+- SSMS
+- Node JS tool
+- POSTMAN
+- Jest for test case
+
+In healthCare application for CA2 of Programming for Information Systems, I have build database setup with configuration. I created REST APIs in JavaScript.
+After developing the REST APIs and connecting with database. I used POSTMAN for local tetsing as rest client tool.
+For code coverage I wrote test case for ther service layer as per standard and run them successfully.
+I have constructed database setup along with set up configuration. Also I designed REST APIs on JavaScript.
+Once the REST APIs are created and the connection with database. I did local testing through POSTMAN as rest client tool.
+Regarding the code coverage I wrote the test cases of the service layer in accordance to standard format and run them successfully.
+This functionality in the back-end of the healthcare information system was developed on JavaScript (Node. js) with Express. js to create few of the RESTful APIs. It is connected to Microsoft SQL Server database which stores patient records. An independent configuration app (db. js) where the connection information of the database was saved and retrieved safely it was an Express to configure the server.
+
+Application-specific api calls:
+1. GET call: Get api call access all the record of the patients.
+I applied LEFT JOIN in query to be able to reflect the tests missing patients.
+In query I used FORMAT function to format dates.
+2. POST Api: /add-patient
+Adds new patient and detected test records.
+3. PUT Api: /updatePatient/:phone_number
+Updates the patient and the test record with respect to the patient’s phone number and test record identifier.
+It returns a meaning message depending on whether or not the update has suceeded and the record is there.
+4. DELETE Api:  /delete-record/:id
+Deletes a test using the given test_id. In case of a non-existent record, I included verification.
