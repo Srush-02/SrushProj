@@ -12,9 +12,8 @@ function renderTable(dataToRender) {
     tableBody.innerHTML = '<tr><td colspan="6">No records found</td></tr>';
     return;
   }
- console.log("data--dataToRender---------" + dataToRender)
+ console.log("dataToRender--" + dataToRender)
   dataToRender.forEach(patient => {
-    console.log("check phone number---->", patient.phone_number)
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${patient.test_id || ''}</td>
@@ -42,7 +41,7 @@ const mobileId = document.getElementById('mobileNumber')
 const emailId = document.getElementById('email')
 const testNameID = document.getElementById('testName')
 
-
+//TODO checks
 function applyFilters() {
   console.log("check applyfilter");
   const name = fName.value.toLowerCase();
@@ -59,12 +58,7 @@ function applyFilters() {
 
     const itemDate = new Date(item.date);
     // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
-    console.log("check itemDate-", itemDate);
-    console.log("abc -", item);
-
-
     const matchName = !name || (item.first_name && item.first_name.toLowerCase().includes(name));
-
     const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
     const matchDateTo = !dateTo || itemDate <= new Date(dateTo);
     const matchStatus = !statusValue || item.status === statusValue;
@@ -97,6 +91,11 @@ clearFilterForm.addEventListener('click', () => {
   applyFilters()
 });
 
+
+
+
+
+//edit 
 window.editPatient = function (phone_number) {
   const row = Array.from(tableBody.rows).find(
     r => r.cells[4].textContent === phone_number
@@ -107,17 +106,17 @@ window.editPatient = function (phone_number) {
   const patient = allData.find(p => p.phone_number === phone_number);
   if (!patient) return;
 
-  row._originalHTML = row.innerHTML;
+  row._ogHTML = row.innerHTML;
 
   row.innerHTML = `
     <td>${patient.test_id || ''}</td>
     <td><input type="text" value="${patient.first_name}" id="editFirstName"/></td>
-    <td><input type="date" value="${patient.date_of_birth}" id="editDob"/></td>
+    <td><input type="date" value="${dateFormatIso(patient.date_of_birth)}" id="editDob"/></td>
     <td style="width: 70px;"><input style="width: 50px;" type="text" value="${patient.gender || ''}" id="editGender"/></td>
     <td>${patient.phone_number}</td>
     <td><input type="email" value="${patient.patient_email}" id="editEmail"/></td>
     <td><input type="text" value="${patient.test_name}" id="editTestName"/></td>
-    <td><input type="date" value="${patient.appointment_date}" id="editAppointDate"/></td>
+    <td><input type="date" value="${dateFormatIso(patient.appointment_date)}" id="editAppointDate"/></td>
     <td>
         <label><input type="radio" name="editStatus" value="Complete" /> Complete</label>
         <label><input type="radio" name="editStatus" value="Pending" /> Pending</label>
@@ -142,10 +141,11 @@ window.saveEdit = function (phone_number, btn) {
     patient_email: document.getElementById('editEmail').value,
     appointment_date: document.getElementById('editAppointDate').value,
     test_name: document.getElementById('editTestName').value,
-    status:  statusValue
+    test_status:  statusValue
   };
 
-  fetch(`${API_BASE_URL}/updatePatient/${id}`, {
+  //update
+  fetch(`${API_BASE_URL}/updatePatient/${phone_number}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -164,18 +164,12 @@ window.saveEdit = function (phone_number, btn) {
     .catch(err => alert('Error updating patient: ' + err.message));
 };
 
-window.cancelEdit = function (btn) {
-  const row = btn.closest('tr');
-  if (row && row._originalHTML) {
-    row.innerHTML = row._originalHTML;   
-    delete row._originalHTML;          
-  }
-};
 
 
+//Delete
 
 window.deletePatient = function (id) {
-  if (!confirm('Are you sure you want to delete this patient?')) return;
+  if (!confirm(`Are you sure you want to delete this test record #${patient.test_id}?`)) return;
 
   fetch(`${API_BASE_URL}/${id}`, {
     method: 'DELETE'
@@ -191,6 +185,8 @@ window.deletePatient = function (id) {
 
 
 
+
+//Patient form
 const addPatientBtn = document.getElementById('addPatientBtn');
 const patientModal = document.getElementById('patientModal');
 const addPatientForm = document.getElementById('addPatientForm');
@@ -251,7 +247,7 @@ addPatientForm.addEventListener('submit', function (e) {
 
   console.log('Submitting data:', payload);
 
-  // Example API request
+  
   fetch(`${API_BASE_URL}/add-patient`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -280,6 +276,8 @@ addPatientForm.addEventListener('submit', function (e) {
 
 });
 
+// 1st load data
+
 window.addEventListener('DOMContentLoaded', () => {
   fetch(`${API_BASE_URL}/patient`)
     .then(res => res.json())
@@ -293,4 +291,18 @@ window.addEventListener('DOMContentLoaded', () => {
       tableBody.innerHTML = '<tr><td colspan="6">Failed to load data</td></tr>';
     });
 });
+
+function dateFormatIso(dateStr) {
+  if (!dateStr) return '';
+  const [dd, mm, yyyy] = dateStr.split('-');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+window.cancelEdit = function (btn) {
+  const row = btn.closest('tr');
+  if (row && row._ogHTML) {
+    row.innerHTML = row._ogHTML;   
+    delete row._ogHTML;          
+  }
+};
 

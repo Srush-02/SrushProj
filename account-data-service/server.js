@@ -13,12 +13,12 @@ const port = 3000;
 
 app.use(express.json());
 
-app.get('/patient', async(req, res) => {
-    try{
+app.get('/patient', async (req, res) => {
+  try {
 
-        const pool = await sql.connect(config);
-        console.log("Connecting to db");
-        const result = await pool.request().query(`
+    const pool = await sql.connect(config);
+    console.log("Connecting to db");
+    const result = await pool.request().query(`
         SELECT 
           tr.test_id,
           p.phone_number,
@@ -33,12 +33,12 @@ app.get('/patient', async(req, res) => {
         FROM Patient p
       LEFT JOIN TestRecord tr ON p.phone_number = tr.phone_number
     `);
-        res.json(result.recordset);
-    } catch (err){
+    res.json(result.recordset);
+  } catch (err) {
     console.error('SQL Error:', err);
     res.status(500).json({ error: 'Database query failed' });
-  
-    }
+
+  }
 });
 
 app.put('/updatePatient/:phone_number', async (req, res) => {
@@ -48,24 +48,54 @@ app.put('/updatePatient/:phone_number', async (req, res) => {
 
   try {
     const pool = await sql.connect(config);
-    const result = await pool.request()
-    .input('test_id', sql.Int, test_id)
-    .input('test_name', sql.VarChar(100), test_name)
-    .input('test_status', sql.VarChar(20), test_status)
-    .input('appointment_date', sql.Date, appointment_date)
-    .query(`
-      UPDATE TestResult
-      SET  test_name = @test_name,
-           test_status = @test_status,
-           appointment_date = @appointment_date
-      WHERE test_id = @test_id
-    `);
+    console.log({
+  test_id,
+  phone_number,
+  first_name,
+  appointment_date,
+  date_of_birth
+});
+    const patientData = await pool.request()
+    
+    //patient
+      .input('first_name', sql.VarChar(100), first_name)
+      .input('last_name', sql.VarChar(100), last_name)
+      .input('gender', sql.VarChar(10),  gender)
+      .input('date_of_birth', sql.Date, date_of_birth)
+      .input('patient_email', sql.VarChar(255), patient_email)
+      .input('phone_number', sql.VarChar(20), phone_number)
+   
+      .query(`
+        UPDATE patient
+           SET first_name = @first_name,
+               last_name = @last_name,
+               gender = @gender,
+               date_of_birth = @date_of_birth,
+               patient_email= @patient_email
+         WHERE phone_number = @phone_number;
+      `);
 
-    if (result.rowsAffected[0] === 0) {
-      return res.status(404).json({ message: 'Patient not found' });
+      if (patientData.rowsAffected[0] === 0) {
+      return res.status(404).json({ message: 'Patient record not found' });
     }
 
-    res.json({ message: 'Patient updated successfully' });
+    const testRecordResult = await pool.request()
+      .input('test_name', sql.VarChar(100), test_name)
+      .input('test_status',sql.VarChar(50), test_status)
+      .input('appointment_date', sql.DateTime,appointment_date)
+      .input('test_id',  sql.Int,  test_id)
+      .query(`
+        UPDATE testrecord
+           SET test_name  = @test_name,test_status = @test_status, appointment_date= @appointment_date
+         WHERE test_id = @test_id;
+      `);
+      console.log("testRecordResult---", testRecordResult)
+
+    if (testRecordResult.rowsAffected[0] === 0) {
+      return res.status(404).json({ message: 'Patient test record not found' });
+    }
+
+    res.json({ message: 'Patients record updated successfully' });
   } catch (err) {
     console.error('SQL Error:', err);
     res.status(500).json({ error: 'Update failed' });
@@ -96,7 +126,7 @@ app.post('/add-patient', async (req, res) => {
           VALUES (@phone_number, @first_name, @last_name, @gender, @date_of_birth, @patient_email)
         END
       `);
-      //for TestRecord
+    //for TestRecord
     await pool.request()
       .input('phone_number', sql.VarChar(20), phone_number)
       .input('test_name', sql.VarChar(100), test_name)
@@ -118,7 +148,7 @@ app.post('/add-patient', async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
 
 
