@@ -169,9 +169,9 @@ window.saveEdit = function (phone_number, btn) {
 //Delete
 
 window.deletePatient = function (id) {
-  if (!confirm(`Are you sure you want to delete this test record #${patient.test_id}?`)) return;
+  if (!confirm(`Are you sure you want to delete this test record ${id}?`)) return;
 
-  fetch(`${API_BASE_URL}/${id}`, {
+  fetch(`${API_BASE_URL}/delete-record/${id}`, {
     method: 'DELETE'
   })
     .then(response => {

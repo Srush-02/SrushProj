@@ -146,6 +146,27 @@ app.post('/add-patient', async (req, res) => {
 
 //app.delete
 
+app.delete('/delete-record/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log("delete id check ")
+  try {
+    const pool = await sql.connect(config);
+    const result = await pool.request()
+      .input('id', sql.Int, id)
+      .query('DELETE FROM TestRecord WHERE test_id = @id'); 
+
+    if (result.rowsAffected[0] === 0) {
+      return res.status(404).json({ message: 'Patients record not found' });
+    }
+
+    res.json({ message: 'Record deleted successfully!!' });
+  } catch (err) {
+    console.error('Delete Error:', err);
+    res.status(500).json({ error: 'Failed to delete record' });
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

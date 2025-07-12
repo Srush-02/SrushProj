@@ -135,3 +135,6 @@ CREATE TABLE TestRecord (
     test_status VARCHAR(255),
     appointment_date DATE
 );
+
+# What’s a connection pool?
+Opening a new TCP connection to SQL Server, await: waits to complete  Promise, so this is pausing that process 
