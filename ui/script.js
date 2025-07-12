@@ -57,7 +57,6 @@ function applyFilters() {
   const filtered = allData.filter(item => {
 
     const itemDate = new Date(item.date);
-    // const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
     const matchName = !name || (item.first_name && item.first_name.toLowerCase().includes(name));
     const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
     const matchDateTo = !dateTo || itemDate <= new Date(dateTo);

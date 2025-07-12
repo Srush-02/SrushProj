@@ -71,22 +71,50 @@ DROP COLUMN created_at, LastUpdatedTimeStamp;
 - POSTMAN
 - Jest for test case
 
-In healthCare application for CA2 of Programming for Information Systems, I have build database setup with configuration. I created REST APIs in JavaScript.
-After developing the REST APIs and connecting with database. I used POSTMAN for local tetsing as rest client tool.
-For code coverage I wrote test case for ther service layer as per standard and run them successfully.
-I have constructed database setup along with set up configuration. Also I designed REST APIs on JavaScript.
-Once the REST APIs are created and the connection with database. I did local testing through POSTMAN as rest client tool.
-Regarding the code coverage I wrote the test cases of the service layer in accordance to standard format and run them successfully.
-This functionality in the back-end of the healthcare information system was developed on JavaScript (Node. js) with Express. js to create few of the RESTful APIs. It is connected to Microsoft SQL Server database which stores patient records. An independent configuration app (db. js) where the connection information of the database was saved and retrieved safely it was an Express to configure the server.
 
-Application-specific api calls:
-1. GET call: Get api call access all the record of the patients.
-I applied LEFT JOIN in query to be able to reflect the tests missing patients.
-In query I used FORMAT function to format dates.
+- In CA2 of Programming for Information Systems, healthCare application was developed in JavaScript (Node. js) using Express.js framework in developing some of the RESTful APIs.
+- It connects with Microsoft SQL Server database that contains patient as well as test records. I used an Express to install (sever.js) an independent configuration app.
+- Information regarding connection of the database configured in db,js file.
+- Code coverage, test cases of the service layer were introduced to access the standard format and run it successfully.
+
+The backend services were performed so that I should be able to carry out the basic functionalities of storing and querying the patient and the test details.
+## Backend specific api calls:
+1. GET call: /patient
+Get api call access to all the record of the patients. I used LEFT JOIN in query so that I could reflect the patients missing the tests. In query I used FORMAT function to format dates.
 2. POST Api: /add-patient
-Adds new patient and detected test records.
+Adds new records of patients and their test records with test status(pending/completed).
 3. PUT Api: /updatePatient/:phone_number
-Updates the patient and the test record with respect to the patient’s phone number and test record identifier.
-It returns a meaning message depending on whether or not the update has suceeded and the record is there.
-4. DELETE Api:  /delete-record/:id
-Deletes a test using the given test_id. In case of a non-existent record, I included verification.
+Updates the patients and the test record based on phone number of patient and identifying number of test records.
+It sends back a message based on whether the update has suceeded or not as well as whether the record exists or not.
+4. DELETE Api call: delete-record/:id
+Removes a test based on the test_id presented. Added validation to show "Patients record not found".
+
+# Front-end Technology:
+HTML,
+CSS, 
+JavaScript
+
+
+- Using RESTful APIs and frontend interface to help filtering/ modifying/ delete patient records using CRUD operations.
+- The application runs at the http://localhost:3000 host.
+- I added window.addEventListener function to display all patient record on the basis of the page rendered.
+- filter exiting patient record with applyFilters method. Included also radio button to test status of patient
+- The addition of a Patient form to add the details of a new patient record. on submit button it triggers /add-patient API to create a new record in the database. with the help of const payload I am adding this data for patient record.
+ payload = {
+    first_name: firstName,
+    last_name: lastName,
+    gender,
+    date_of_birth: dob,
+    phone_number: phoneNumber,
+    patient_email: email,
+    test_name: testName,
+    appointment_date: appointmentDate,
+    test_status: status
+  };
+
+- Added a column to action in below table so that it contains 2 buttons EDIT and DELETE row. To begin with, I was trying to do global edit of the change in pages but it was not working properly due to proper css hence taking array as per raw edit.
+- Applied use of wrapper to correct content of table properly
+- Save button makes a PUT api call request to modify a patient and test record.
+- The Delete button that removes a certain record of a test through api call DELETE /delete-record/:id with the message asking conformation whether he is sure to delete the test record.
+
+
