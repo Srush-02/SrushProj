@@ -8,8 +8,8 @@ const config = {
   database: 'HealthCare',
   port: 1433,
   options: {
-    encrypt: true,                  // Use false if local DB without SSL
-    trustServerCertificate: true,// Required for self-signed certs
+    encrypt: true,              
+    trustServerCertificate: true,
   }
 };
 
