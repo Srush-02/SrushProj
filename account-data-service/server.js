@@ -89,7 +89,6 @@ app.put('/updatePatient/:phone_number', async (req, res) => {
            SET test_name  = @test_name,test_status = @test_status, appointment_date= @appointment_date
          WHERE test_id = @test_id;
       `);
-      console.log("testRecordResult---", testRecordResult)
 
     if (testRecordResult.rowsAffected[0] === 0) {
       return res.status(404).json({ message: 'Patient test record not found' });

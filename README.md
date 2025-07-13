@@ -22,7 +22,6 @@ Run below command:
 node server.js
 Try "Go live" to connect html file.
 
-
 # Unit testcase:
 
 
@@ -116,5 +115,24 @@ JavaScript
 - Applied use of wrapper to correct content of table properly
 - Save button makes a PUT api call request to modify a patient and test record.
 - The Delete button that removes a certain record of a test through api call DELETE /delete-record/:id with the message asking conformation whether he is sure to delete the test record.
+
+# Added console logs for debugging issues.
+
+# Reference:
+https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
+https://www.w3schools.com/js/
+https://www.geeksforgeeks.org/javascript/javascript-tutorial/
+window event: https://blog.octalabs.com/javascript-window-events-explained-with-practical-examples-b278cb0bb74c
+auto increament field for record ID: https://www.w3schools.com/sql/sql_autoincrement.asp
+express: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction
+jest: https://jestjs.io/docs/getting-started
+To solve jest UnauthorizedAccess issue : https://stackoverflow.com/questions/64633727/how-to-fix-running-scripts-is-disabled-on-this-system
+
+
+# Documentation:
+Api writtern in server.js  for backend.
+One server.js has added for 4 apis. i.e. /patient, /updatePatient, /add-patient, /delete-record
+Handled css style in CSS.style  with index.html file.
+
 
 

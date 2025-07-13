@@ -42,6 +42,10 @@ ReferenceError: module is not defined in ES module scope
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
 
 Node.js v22.16.0
+soln: 
+npm init
+npm install express cors
+import express from 'express';
 
 2. how to define defines the number of columns a table cell should span. and styling ideas(used colspan information from w3school).
 
@@ -139,7 +143,16 @@ CREATE TABLE TestRecord (
 # What’s a connection pool?
 Opening a new TCP connection to SQL Server, await: waits to complete  Promise, so this is pausing that process 
 
-# Clearning concept of Js :
-https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
-https://www.w3schools.com/js/
-https://www.geeksforgeeks.org/javascript/javascript-tutorial/
+7. PS C:\Users\srush\Documents\sem1\HealthCare\SrushProj> npm install --save-dev jest
+npm : File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system. For more information, see 
+about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+At line:1 char:1
++ npm install --save-dev jest
++ ~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+https://stackoverflow.com/questions/64633727/how-to-fix-running-scripts-is-disabled-on-this-system
+soln: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  run on powerShell admi
+then run npm install --save-dev jest
+
+
