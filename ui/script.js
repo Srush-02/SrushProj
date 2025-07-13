@@ -167,15 +167,15 @@ window.saveEdit = function (phone_number, btn) {
 
 //Delete
 
-window.deletePatient = function (id) {
-  if (!confirm(`Are you sure you want to delete this test record ${id}?`)) return;
-
-  fetch(`${API_BASE_URL}/delete-record/${id}`, {
+window.deletePatient = function (phone) {
+  if (!confirm(`Are you sure you want to delete this test record ${phone}?`)) return;
+console.log("Type of ID:", typeof id);
+  fetch(`${API_BASE_URL}/delete-record/${phone}`, {
     method: 'DELETE'
   })
     .then(response => {
       if (!response.ok) throw new Error('Delete failed');
-      allData = allData.filter(p => p.id !== id);
+      allData = allData.filter(p => p.phone_number !== phone);
       applyFilters();
     })
     .catch(err => alert('Error deleting patient: ' + err.message));
