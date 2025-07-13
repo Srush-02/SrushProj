@@ -23,7 +23,14 @@ node server.js
 Try "Go live" to connect html file.
 
 # Unit testcase:
-
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+npm install --save-dev jest
+added in package.json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
 
 
 
