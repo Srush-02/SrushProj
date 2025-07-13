@@ -45,7 +45,7 @@ const testNameID = document.getElementById('testName')
 function applyFilters() {
   console.log("check applyfilter");
   const name = fName.value.toLowerCase();
-  console.log("check applyfilter2");
+  console.log("check applyfilter2", name);
 
   const dateFrom = fromDateId.value;
   const dateTo = toDateID.value;
@@ -56,7 +56,8 @@ function applyFilters() {
   const testName = testNameID.value.toLowerCase();
   const filtered = allData.filter(item => {
 
-    const itemDate = new Date(item.date);
+    const formattedDate = dateFormatIso(item.appointment_date);
+    const itemDate = new Date(formattedDate);
     const matchName = !name || (item.first_name && item.first_name.toLowerCase().includes(name));
     const matchDateFrom = !dateFrom || new Date(dateFrom) <= itemDate;
     const matchDateTo = !dateTo || itemDate <= new Date(dateTo);
