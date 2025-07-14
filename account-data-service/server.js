@@ -1,7 +1,4 @@
 
-// import sql from 'mssql';
-// import express from 'express';
-// import  {config} from './db/db.js';
 const cors = require('cors');
 const express = require('express');
 const sql = require('mssql');
