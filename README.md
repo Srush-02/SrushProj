@@ -137,6 +137,22 @@ JavaScript
 
 ## Added console logs for debugging issues.
 
+# Connection to VM:
+Run command on bash:
+ssh root@13.79.120.224 (public ip)
+- updated basic packages:
+sudo apt update && sudo apt upgrade -y
+sudo apt install git curl build-essential -y
+- github clone:
+git clone https://github.com/Srush-02/SrushProj.git
+cd SrushProj
+- Installed my project
+command:
+cd /root/your_project_folder
+npm install
+
+
+
 # Reference:
 https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
 https://www.w3schools.com/js/
