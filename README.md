@@ -6,23 +6,32 @@ Company Location : https://g.co/kgs/VwsfmQk
 Company Background : 
     Medicon India is a healthcare service centre located in Mira-Bhayandar(Mumbai). Medicon India is a company that is committed to make healthcare affordable. It is committed to making healthcare accessible to all. They achieve this by partnering with over 100 medical facilities, such as diagnostic centers, hospitals, and laboratories. 
 Implemention : 
-    Healthcare patient test data including MRI, blood test and and patient encounter information at admin level.
+    Healthcare patient test data including MRI, blood test etc and patient encounter information at admin level.
 
-Frontend & Backend: JavaScript (Node.js and framework like React.js)
-Database: SSMS
 APIs: RESTful APIs to handle CRUD operations
-For admin panel :Create, Read, Update, Delete (CRUD) operations for patient records, Upload diagnostic data like MRI & blood test results
-For database ll be creating 2 table patient details, Test Record.
-Patient API:
-To get all patient records, Post call- Add a new patient , Delete - Delete a patient record.
+Admin panel :Create, Read, Update, Delete (CRUD) operations for patient records, Upload diagnostic data like MRI & blood
 
-# steps for excution: 
+# Introduction:
+
+Medicon India is a health care service center which is located in Mira-Bhayandar, Mumbai,
+This company providing affordable and accessible healthcare to all. There are more than 100 medical facilities, which including diagnostic centers, hospitals, and laboratories with which the organization cooperates to provide a large number of different services at the fair price to patients.
+
+In this project, a development of the application is required at an administrative level to handle patient and their testing records on admin level. It is centered around CRUD (Create, Read, Update, Delete) functionality and makes possible that administrators level:
+Insert, modify, or remove patient records
+modify the test status (e.g. Pending or Completed)
+Search and find the data of the patients using filter which is according to a given date interval of the appointment (fromDate to toDate)
+This system will be able to efficient for management process of healthcare services of Medicon India by increasing the precision of data, and by handling data better and also making better decisions using structured and easily accessible information about the patients.
+
+
+# Steps for excution: 
 Open SSMS for backend connection and using VS code open server.js file 
 Run below command: 
 node server.js
-Try "Go live" to connect html file.
+Try "Go live" to connect html file locally.
 
 # Unit testcase:
+jest tests written for Apis
+serverTest.test.js class run and test the APIs
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 npm install --save-dev jest
 added in package.json
@@ -35,6 +44,8 @@ added in package.json
 
 
 # SQL query:
+Created two tables using SSMS plateform:
+TestRecord, Patient
 
  CREATE TABLE TestRecord (
     test_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -122,8 +133,9 @@ JavaScript
 - Applied use of wrapper to correct content of table properly
 - Save button makes a PUT api call request to modify a patient and test record.
 - The Delete button that removes a certain record of a test through api call DELETE /delete-record/:id with the message asking conformation whether he is sure to delete the test record.
+- Backend interface with frontend form inputs using index.html, which is configured to store and retrieve patient details in admin level, including patients information, test names, appointment dates, phone number i have added as a mendatory key and statuses
 
-# Added console logs for debugging issues.
+## Added console logs for debugging issues.
 
 # Reference:
 https://www.youtube.com/watch?v=ER9SspLe4Hg&list=PLu0W_9lII9ahR1blWXxgSlL4y9iQBnLpR
