@@ -1,4 +1,20 @@
-# SrushProj
+Student  Srushti Kalpak Raut(20067494)
+Programme:  2425_TMD3
+Module/Subject Title:  B9IS123 PROGRAMMING FOR INFORMATION SYSTEMS
+Assignment Title: Paul Laird 
+
+
+
+# Introduction:
+
+Medicon India is a health care service center which is located in Mira-Bhayandar, Mumbai,
+This company providing affordable and accessible healthcare to all. There are more than 100 medical facilities, which including diagnostic centers, hospitals, and laboratories with which the organization cooperates to provide a large number of different services at the fair price to patients.
+
+In this project, a development of the application is required at an administrative level to handle patient and their testing records on admin level. It is centered around CRUD (Create, Read, Update, Delete) functionality and makes possible that administrators level:
+Insert, modify, or remove patient records
+modify the test status (e.g. Pending or Completed)
+Search and find the data of the patients using filter which is according to a given date interval of the appointment (fromDate to toDate)
+This system will be able to efficient for management process of healthcare services of Medicon India by increasing the precision of data, and by handling data better and also making better decisions using structured and easily accessible information about the patients.
 
 Company Name : MEDICON INDIA
 Company Website: https://mediconindia.com/
@@ -11,16 +27,6 @@ Implemention :
 APIs: RESTful APIs to handle CRUD operations
 Admin panel :Create, Read, Update, Delete (CRUD) operations for patient records, Upload diagnostic data like MRI & blood
 
-# Introduction:
-
-Medicon India is a health care service center which is located in Mira-Bhayandar, Mumbai,
-This company providing affordable and accessible healthcare to all. There are more than 100 medical facilities, which including diagnostic centers, hospitals, and laboratories with which the organization cooperates to provide a large number of different services at the fair price to patients.
-
-In this project, a development of the application is required at an administrative level to handle patient and their testing records on admin level. It is centered around CRUD (Create, Read, Update, Delete) functionality and makes possible that administrators level:
-Insert, modify, or remove patient records
-modify the test status (e.g. Pending or Completed)
-Search and find the data of the patients using filter which is according to a given date interval of the appointment (fromDate to toDate)
-This system will be able to efficient for management process of healthcare services of Medicon India by increasing the precision of data, and by handling data better and also making better decisions using structured and easily accessible information about the patients.
 
 
 # Steps for excution: 
