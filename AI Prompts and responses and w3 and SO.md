@@ -168,6 +168,8 @@ then run npm install --save-dev jest
 
 Test Suites: 1 failed, 1 total 
 soln: added test() on each methodName
+Error: no test specified
+soln: https://chatgpt.com/c/6872f9ec-80dc-8005-94c4-4f026c8a4f61
 
 
 9. value, which is much more comprehensive and powerful.
