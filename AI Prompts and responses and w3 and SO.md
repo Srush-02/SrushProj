@@ -170,4 +170,53 @@ Test Suites: 1 failed, 1 total
 soln: added test() on each methodName
 
 
+9. value, which is much more comprehensive and powerful.
+npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm ERR! code 1
+npm ERR! path /home/20067494/SrushProj/account-data-service/node_modules/msnodesqlv8
+npm ERR! command failed
+npm ERR! command sh -c prebuild-install || node-gyp rebuild
+npm ERR! make: Entering directory '/home/20067494/SrushProj/account-data-service/node_modules/msnodesqlv8/build'
+npm ERR!   ACTION binding_gyp_sqlserverv8_target_print_variables src/BeginTranOperation.cpp
+npm ERR! cflags_cpp -std=c++20 | arch: x86_64 | link_path: -L/usr/local/lib -L/usr/lib -L/usr/lib64 -L. | msodbc_include_folders  | fileset src/BeginTranOperation.cpp src/BinaryColumn.cpp src/BoundDatum.cpp src/BoundDatumSet.cpp src/CancelOperation.cpp src/CloseOperation.cpp src/CollectOperation.cpp src/Column.cpp src/Connection.cpp src/ConnectionHandles.cpp src/EndTranOperation.cpp src/FreeStatementOperation.cpp src/MutateJS.cpp src/OdbcConnection.cpp src/OdbcConnectionBridge.cpp src/OdbcError.cpp src/OdbcHandle.cpp src/OdbcOperation.cpp src/OdbcStatement.cpp src/OdbcStatementCache.cpp src/OpenOperation.cpp src/Operation.cpp src/OperationManager.cpp src/PollingModeOperation.cpp src/PrepareOperation.cpp src/ProcedureOperation.cpp src/QueryOperation.cpp src/QueryOperationParams.cpp src/QueryPreparedOperation.cpp src/ReadColumnOperation.cpp src/ReadNextResultOperation.cpp src/ResultSet.cpp src/TimestampColumn.cpp src/UnbindOperation.cpp src/Utility.cpp src/addon.cpp src/bcp.cpp src/stdafx.cpp
+npm ERR!   CXX(target) Release/obj.target/sqlserverv8/src/BeginTranOperation.o
+npm ERR! make: Leaving directory '/home/20067494/SrushProj/account-data-service/node_modules/msnodesqlv8/build'
+npm ERR! prebuild-install warn install No prebuilt binaries found (target=18.19.1 runtime=node arch=x64 libc= platform=linux)
+npm ERR! gyp info it worked if it ends with ok
+npm ERR! gyp info using node-gyp@9.3.0
+npm ERR! gyp info using node@18.19.1 | linux | x64
+npm ERR! gyp info find Python using Python version 3.12.3 found at "/usr/bin/python3"
+npm ERR! gyp info spawn /usr/bin/python3
+npm ERR! gyp info spawn args [
+npm ERR! gyp info spawn args   '/usr/share/nodejs/node-gyp/gyp/gyp_main.py',
+npm ERR! gyp info spawn args   'binding.gyp',
+npm ERR! gyp info spawn args   '-f',
+npm ERR! gyp info spawn args   'make',
+npm ERR! gyp info spawn args   '-I',
+npm ERR! gyp info spawn args   '/home/20067494/SrushProj/account-data-service/node_modules/msnodesqlv8/build/config.gypi',
+npm ERR! gyp info spawn args   '-I',
+npm ERR! gyp info spawn args   '/usr/share/nodejs/node-gyp/addon.gypi',
+npm ERR! gyp info spawn args   '-I',
+npm ERR! gyp info spawn args   '/usr/include/nodejs/common.gypi',
+npm ERR! gyp info spawn args   '-Dlibrary=shared_library',
+npm ERR! gyp info spawn args   '-Dvisibility=default',
+npm ERR! gyp info spawn args   '-Dnode_root_dir=/usr/include/nodejs',
+npm ERR! gyp info spawn args   '-Dnode_gyp_dir=/usr/share/nodejs/node-gyp',
+npm ERR! gyp info spawn args   '-Dnode_lib_file=/usr/include/nodejs/<(target_arch)/node.lib',
+npm ERR! gyp info spawn args   '-Dmodule_root_dir=/home/20067494/SrushProj/account-data-service/node_modules/msnodesqlv8',
+npm ERR! gyp info spawn args   '-Dnode_engine=v8',
+npm ERR! gyp info spawn args   '--depth=.',
+npm ERR! gyp info spawn args   '--no-parallel',
+npm ERR! gyp info spawn args   '--generator-output',
+npm ERR! gyp info spawn args   'build',
+npm ERR! gyp info spawn args   '-Goutput_dir=.'
+npm ERR! gyp info spawn args ]
+npm ERR! gyp info spawn make
+npm ERR! gyp info spawn args [ 'BUILDTYPE=Release', '-C', 'build' ]
+
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+sudo apt-get update
+
+
 
