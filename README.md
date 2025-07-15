@@ -139,17 +139,27 @@ JavaScript
 
 # Connection to VM:
 Run command on bash:
-ssh root@13.79.120.224 (public ip)
+ssh srush@13.79.120.224
 - updated basic packages:
 sudo apt update && sudo apt upgrade -y
-sudo apt install git curl build-essential -y
 - github clone:
 git clone https://github.com/Srush-02/SrushProj.git
+cd /home/20067494/SrushProj/account-data-service
+ls
+npm install
+
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+sudo apt-get update
+to solve issue of msnodesqlv8 installation
 cd SrushProj
 - Installed my project
 command:
-cd /root/your_project_folder
-npm install
+$ cd /home/20067494/SrushProj/account-data-service
+$ npm install
+ll get:
+Server running at http://localhost:3000
+
 
 
 

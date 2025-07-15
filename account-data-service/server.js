@@ -1,14 +1,20 @@
 
 const cors = require('cors');
 const express = require('express');
+
 const sql = require('mssql');
 const { config } = require('./db/db');
 
 const app = express();
 app.use(cors())
+
 const port = 3000;
 
 app.use(express.json());
+
+
+
+
 
 app.get('/patient', async (req, res) => {
   try {
