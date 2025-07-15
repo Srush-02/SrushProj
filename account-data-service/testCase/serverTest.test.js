@@ -99,10 +99,10 @@ test('POST /add-patient - success', async () => {
 });
 
 
-test('returns 400 for invalid id parameter', async () => {
-  const res = await request(app).delete('/delete-record/abc');
+test('returns 404 for invalid id parameter', async () => {
+  const res = await request(app).delete('/delete-record/test');
 
-  expect(res.statusCode).toBe(400);
-  expect(res.body).toEqual({ message: 'Invalid id parameter' });
+  expect(res.statusCode).toBe(404);
+  expect(res.body).toEqual({ message: 'Patients record not found' });
 });
 

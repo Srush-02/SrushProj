@@ -178,6 +178,7 @@ auto increament field for record ID: https://www.w3schools.com/sql/sql_autoincre
 express: https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction
 jest: https://jestjs.io/docs/getting-started
 To solve jest UnauthorizedAccess issue : https://stackoverflow.com/questions/64633727/how-to-fix-running-scripts-is-disabled-on-this-system
+To deploye code : https://chatgpt.com/c/68757ee9-11a4-8005-8712-7f38fb5609f6
 
 
 # Documentation:
